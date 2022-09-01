@@ -47,7 +47,7 @@ createUser({ body }, res){
 
 
 //PUT a user (update by _id)
-addUser({ params, body }, res){
+updateUser({ params, body }, res){
     User.findOneAndUpdate(
         { _id: params.userId },
         { $push: { user: body } },
@@ -64,7 +64,7 @@ addUser({ params, body }, res){
 },
 
 //DELETE a user (remove by _id)
-removeUser({ params }, res){
+deleteUser({ params }, res){
     User.findOneAndDelete({ _id: params.userId})
     .then(deleteUser => {
         if(!deleteUser){
@@ -124,3 +124,4 @@ addFriend({ params }, res){
 };
 
 
+module.exports = UserController;

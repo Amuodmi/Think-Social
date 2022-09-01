@@ -3,7 +3,7 @@ const dateFormat = require('../utils/dateFormat');
 
 const UserSchema = new Schema(
   {
-    userName: {
+    username: {
       type: String,
       unique: true,
       required: 'You need to create a username',
@@ -15,7 +15,6 @@ const UserSchema = new Schema(
       lowercase: true,
       unique: true,
       required: 'You need to provide an email', 
-      validate: [validateEmail, 'Please give a valid email'],
       match: [/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/, 'Please enter a valid email']
     },
     thoughts: {
@@ -45,7 +44,7 @@ const UserSchema = new Schema(
 
 
   // create the User model using the UserSchema
-const User = model('User', Userschema);
+const User = model('User', UserSchema);
 
 // export the User model
 module.exports = User;

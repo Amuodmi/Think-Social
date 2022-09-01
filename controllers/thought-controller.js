@@ -56,7 +56,7 @@ createThought({ body }, res) {
 },
 
     //PUT thought (update by _id, need to push)
-    addThought({ params, body }, res){
+    updateThought({ params, body }, res){
         Thought.findOneAndUpdate(
             { _id: params.thoughtId },
             { $push: {reactions: body } },
@@ -73,7 +73,7 @@ createThought({ body }, res) {
     },
 
  //DELETE thought (remove by _id, and pull)
-  removeThought({ params }, res){
+  deleteThought({ params }, res){
     Thought.findOneAndDelete({ _id: params.thoughtId})
     .then(deleteThought => {
         if(!deleteThought){
