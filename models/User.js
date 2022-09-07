@@ -17,15 +17,15 @@ const UserSchema = new Schema(
       required: 'You need to provide an email', 
       match: [/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/, 'Please enter a valid email']
     },
-    thoughts: {
-      type: Schema.Types.ObjectID,
+    thoughts: [{
+      type: Schema.Types.ObjectId,
       ref: 'Thought'
-    },
+    }],
     
-    friends:  {
+    friends:  [{
         type: Schema.Types.ObjectId,
         ref: 'User'
-      }
+  }]
     
   },
   {
@@ -39,7 +39,8 @@ const UserSchema = new Schema(
 
   // get total count of Friends on retrieval
   UserSchema.virtual('FriendsCount').get(function() {
-    return this.friends.length
+    return this?.friends?.length || 0
+    // return this.friends.length;
   });
 
 

@@ -9,7 +9,7 @@ const thoughtController = {
             select: '-__v'
           })
           .select('-__v')
-          .sort({_id:-1})
+          .sort({_id: -1})
           .then(dbThoughtData => 
             res.json(dbThoughtData))
           .catch(err => {
@@ -40,7 +40,7 @@ createThought({ body }, res) {
     Thought.create(body)
     .then(({ _id}) => {
         return User.findOneAndUpdate(
-            { _id: params.userId },
+            { _id: body.userId },
             { $push: { comments: _id } },
             { new: true }
         );
@@ -52,7 +52,10 @@ createThought({ body }, res) {
         }
         res.json(dbThoughtData);
     })
-    .catch(err => res.json(err));
+    .catch(err => {
+        console.log(err);
+        res.status(400).json(err);
+            });
 },
 
     //PUT thought (update by _id, need to push)
@@ -69,7 +72,10 @@ createThought({ body }, res) {
             }
             res.json(dbThoughtData);
         })
-        .catch(err => res.json(err));
+        .catch(err => {
+            console.log(err);
+            res.status(400).json(err);
+                });
     },
 
  //DELETE thought (remove by _id, and pull)
@@ -92,7 +98,10 @@ createThought({ body }, res) {
         }
         res.json(dbUserData);
     })
-    .catch(err => res.json(err));
+    .catch(err => {
+        console.log(err);
+        res.status(400).json(err);
+            });
 },
 
 //POST reaction (add reaction - need to push)
@@ -109,7 +118,10 @@ createThought({ body }, res) {
         }
         res.json(dbUserData);
     })
-    .catch(err => res.json(err));
+    .catch(err => {
+        console.log(err);
+        res.status(400).json(err);
+            });
   },    
 
 // DELETE reaction (remove reaction, and pull)
@@ -120,7 +132,10 @@ removeReaction({ params }, res) {
     { new: true }
   )
     .then(dbThoughtData => res.json(dbThoughtData))
-    .catch(err => res.json(err));
+    .catch(err => {
+        console.log(err);
+        res.status(400).json(err);
+            });
 },
 
    

@@ -8,7 +8,7 @@ const ReactionSchema = new Schema(
       type: Schema.Types.ObjectId,
       default: () => new Types.ObjectId()
     },
-    thoughtBody: {
+    reactionBody: {
       type: String,
       required: true,
       trim: true
@@ -38,7 +38,7 @@ const ThoughtSchema = new Schema(
       required: true,
       trim: true
     },
-    commentBody: {
+    thoughtBody: {
       type: String,
       required: true, 
       trim: true
@@ -49,7 +49,7 @@ const ThoughtSchema = new Schema(
       get: createdAtVal => dateFormat(createdAtVal)
     },
     // use ReactionSchema to validate data for a reply
-    replies: [ReactionSchema]
+    reactions: [ReactionSchema],
   },
   {
     toJSON: {
