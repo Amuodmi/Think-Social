@@ -62,7 +62,10 @@ updateUser({ params, body }, res){
         }
         res.json(dbUserData);
     })
-    .catch(err => res.json(err));
+    .catch(err => {
+        console.log(err);
+        res.status(400).json(err);
+            });
 },
 
 //DELETE a user (remove by _id)
