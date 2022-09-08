@@ -51,8 +51,7 @@ createUser({ body }, res){
 //PUT a user (update by _id)
 updateUser({ params, body }, res){
     User.findOneAndUpdate(
-        { _id: params.userId },
-        { $push: { user: body } },
+        { _id: params.id }, body,
         { new: true, runValidators: true }
     )
     .then(dbUserData => {
@@ -70,9 +69,9 @@ updateUser({ params, body }, res){
 
 //DELETE a user (remove by _id)
 deleteUser({ params }, res){
-    User.findOneAndDelete({ _id: params.userId})
-    .then(deleteUser => {
-        if(!deleteUser){
+    User.findOneAndDelete({ _id: params.id})
+    .then(dbUserData => {
+        if(!dbUserData){
             return res.status(404).json({message: 'No user found with this ID'});
         }
         //deletes posted thoughts by user?
@@ -90,7 +89,10 @@ deleteUser({ params }, res){
         }
         res.json(dbUserData);
     })
-    .catch(err => res.json(err));
+    .catch(err => {
+        console.log(err);
+        res.status(400).json(err);
+            });
 },
 
 //add new friend to user's friend list

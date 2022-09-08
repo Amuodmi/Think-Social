@@ -61,7 +61,7 @@ createThought({ body }, res) {
     //PUT thought (update by _id, need to push)
     updateThought({ params, body }, res){
         Thought.findOneAndUpdate(
-            { _id: params.thoughtId },
+            { _id: params.id },
             { $push: {reactions: body } },
             { new: true, runValidators: true }
         )
@@ -80,14 +80,14 @@ createThought({ body }, res) {
 
  //DELETE thought (remove by _id, and pull)
   deleteThought({ params }, res){
-    Thought.findOneAndDelete({ _id: params.thoughtId})
+    Thought.findOneAndDelete({ _id: params.id})
     .then(deleteThought => {
         if(!deleteThought){
             return res.status(404).json({message: 'No thought found with this ID'});
         }
         return User.findOneAndUpdate(
             {_id: params.userId },
-            { $pull: {thoughts: params.thoughtId }},
+            { $pull: {thoughts: params.id }},
             { new: true }
         );
     })
@@ -107,7 +107,7 @@ createThought({ body }, res) {
 //POST reaction (add reaction - need to push)
   addReaction({ params, body}, res){
     Thought.findOneAndUpdate(
-        { _id: params.thoughtId },
+        { _id: params.id },
         { $push: { replies: body } },
         { new: true, runValidators: true }
     )
@@ -127,7 +127,7 @@ createThought({ body }, res) {
 // DELETE reaction (remove reaction, and pull)
 removeReaction({ params }, res) {
   Thought.findOneAndUpdate(
-    { _id: params.thoughtId },
+    { _id: params.id },
     { $pull: { reactions: { reactionId: params.reactionId } } },
     { new: true }
   )
